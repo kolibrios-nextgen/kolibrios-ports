@@ -1,0 +1,10 @@
+case $1 in
+    "--build" ) BUILD ;;
+    "--install" ) INSTALL ;;
+    "--clean" ) CLEAN ;;
+    "" )
+        BUILD
+        INSTALL
+        ;;
+    *) fatal "Unknown argument!"
+esac
