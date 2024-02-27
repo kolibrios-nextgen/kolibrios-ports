@@ -14,7 +14,3 @@ fatal()
     echo -e "\e[31m$1\e[0m"
     exit
 }
-
-if [[ -z "$CWD" ]]; then
-    CWD=$(pwd)
-fi

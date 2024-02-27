@@ -4,9 +4,7 @@ source $SDK_DIR/scripts/start-recipe
 
 BUILD()
 {
-    echo $CWD
-    mkdir -p $CWD/build
-    cd $CWD/build
+    cd build
     ../configure --target=$TARGET \
                  --prefix="$SDK_INSTALL_DIR/toolchain" \
                  --with-sysroot="$SDK_INSTALL_DIR/sysroot" \
@@ -19,18 +17,20 @@ BUILD()
 
     make -j$NUM_JOBS
     msg "Binutils build successful!"
+    cd ..
 }
 
 INSTALL()
 {
-    cd $CWD/build
+    cd build
     make install-strip
     msg "Binutils install successful!"
+    cd ..
 }
 
 CLEAN()
 {
-    rm -rf $CWD/build
+    rm -rf build
     msg "Binutils build artifacts removed!"
 }
 
