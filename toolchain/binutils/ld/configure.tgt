@@ -430,6 +430,9 @@ i[3-7]86-*-cygwin*)	targ_emul=i386pe ;
 i[3-7]86-*-mingw32*)	targ_emul=i386pe ;
 			targ_extra_ofiles="deffilep.o pdb.o pe-dll.o"
 			;;
+i[3-7]86-*-kolibrios*)	targ_emul=i386pe ;
+			targ_extra_ofiles="deffilep.o pe-dll.o"
+			;;
 i[3-7]86-*-interix*)	targ_emul=i386pe_posix;
 			targ_extra_ofiles="deffilep.o pe-dll.o"
 			;;

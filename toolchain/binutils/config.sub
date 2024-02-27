@@ -399,6 +399,10 @@ case $1 in
 				basic_machine=arm-unknown
 				basic_os=mingw32ce
 				;;
+			kolibrios)
+				basic_machine=i586-pc
+				basic_os=kolibrios
+				;;
 			monitor)
 				basic_machine=m68k-rom68k
 				basic_os=coff
@@ -1758,7 +1762,7 @@ case $os in
 	     | onefs* | tirtos* | phoenix* | fuchsia* | redox* | bme* \
 	     | midnightbsd* | amdhsa* | unleashed* | emscripten* | wasi* \
 	     | nsk* | powerunix* | genode* | zvmoe* | qnx* | emx* | zephyr* \
-	     | fiwix* | mlibc* )
+	     | fiwix* | mlibc* | kolibrios*)
 		;;
 	# This one is extra strict with allowed versions
 	sco3.2v2 | sco3.2v[4-9]* | sco5v6*)

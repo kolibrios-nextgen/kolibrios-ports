@@ -778,6 +778,11 @@ case "${targ}" in
     targ_selvecs="i386_pe_vec i386_pe_big_vec i386_pei_vec i386_elf32_vec iamcu_elf32_vec pdb_vec"
     targ_underscore=yes
     ;;
+  i[3-7]86-*-kolibrios*)
+    targ_defvec=i386_pe_vec
+    targ_selvecs="i386_pe_vec i386_pei_vec"
+    targ_underscore=yes
+    ;;
   i[3-7]86-*-vxworks*)
     targ_defvec=i386_elf32_vxworks_vec
     targ_underscore=yes
