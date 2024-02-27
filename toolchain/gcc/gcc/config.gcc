@@ -2102,6 +2102,28 @@ i[34567]86-*-cygwin*)
 	default_use_cxa_atexit=yes
 	use_gcc_stdint=wrap
 	;;
+i[34567]86-*-kolibrios*)
+	tm_file="${tm_file} i386/unix.h i386/bsd.h i386/gas.h i386/cygming.h i386/kolibrios.h i386/mingw-stdint.h"
+	tm_defines="${tm_defines} TARGET_KOLIBRIOS=1"
+	c_target_objs="${c_target_objs} winnt-c.o"
+	cxx_target_objs="${cxx_target_objs} winnt-c.o"
+	d_target_objs="${d_target_objs} winnt-d.o"
+	tmake_file="${tmake_file} t-winnt i386/t-cygming t-slibgcc"
+    native_system_header_dir=/include
+	target_gtfiles="$target_gtfiles \$(srcdir)/config/i386/winnt.cc"
+	extra_options="${extra_options} i386/kolibrios.opt"
+	extra_objs="${extra_objs} winnt.o winnt-stubs.o"
+	cxx_target_objs="${cxx_target_objs} winnt-cxx.o"
+	target_has_targetcm="yes"
+	target_has_targetdm="yes"
+	gas=yes
+	gnu_ld=yes
+	default_use_cxa_atexit=yes
+	use_gcc_stdint=wrap
+	if test x$enable_threads = xyes; then
+		thread_file='kolibrios'
+	fi
+;;
 x86_64-*-cygwin*)
 	need_64bit_isa=yes
 	tm_file="${tm_file} i386/unix.h i386/bsd.h i386/gas.h i386/cygming.h i386/cygwin.h i386/cygwin-w64.h i386/cygwin-stdint.h"

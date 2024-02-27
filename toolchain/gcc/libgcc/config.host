@@ -370,6 +370,9 @@ case ${host} in
 esac
 
 case ${host} in
+i[34567]86-kolibrios*)
+  enable_execute_stack=enable-execute-stack-empty.c;
+  ;;
 *-*-darwin* | *-*-dragonfly* | *-*-freebsd* | *-*-netbsd* | *-*-openbsd* | \
   *-*-solaris2*)
   enable_execute_stack=enable-execute-stack-mprotect.c
@@ -836,6 +839,13 @@ x86_64-*-cygwin*)
 	fi
 	# FIXME - dj - t-chkstk used to be in here, need a 64-bit version of that
 	tmake_file="${tmake_file} ${tmake_eh_file} ${tmake_dlldir_file} i386/t-slibgcc-cygming i386/t-cygming i386/t-cygwin t-crtfm t-dfprules i386/t-chkstk"
+	;;
+i[34567]86-*-kolibrios*)
+	case ${target_thread_file} in
+	  kolibrios)
+	    tmake_thr_file="i386/t-gthr-kolibrios"
+	    ;;
+	esac
 	;;
 i[34567]86-*-mingw*)
 	extra_parts="crtbegin.o crtend.o crtfastmath.o"

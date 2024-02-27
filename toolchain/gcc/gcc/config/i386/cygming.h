@@ -124,6 +124,12 @@ along with GCC; see the file COPYING3.  If not see
 
 #define TARGET_EXECUTABLE_SUFFIX ".exe"
 
+#ifdef TARGET_KOLIBRIOS
+	#define CYGMING_BUILTIN_ASSERT builtin_assert ("system=kolibrios");
+#else
+	#define CYGMING_BUILTIN_ASSERT builtin_assert ("system=winnt");
+#endif
+
 #define TARGET_OS_CPP_BUILTINS()					\
   do									\
     {									\
@@ -131,7 +137,7 @@ along with GCC; see the file COPYING3.  If not see
 	  builtin_define ("_X86_=1");					\
 	if (TARGET_SEH)							\
 	  builtin_define ("__SEH__");				\
-	builtin_assert ("system=winnt");				\
+	CYGMING_BUILTIN_ASSERT  \
 	builtin_define ("__stdcall=__attribute__((__stdcall__))");	\
 	builtin_define ("__fastcall=__attribute__((__fastcall__))");	\
 	builtin_define ("__thiscall=__attribute__((__thiscall__))");	\
