@@ -593,6 +593,9 @@ crt/crtdll.o: crt/crtdll.c
 pe/loader.o: pe/loader.c
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -fno-delete-null-pointer-checks pe/loader.c -o $@
 
+pe/crtloader.o: pe/crtloader.c
+	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -fno-delete-null-pointer-checks pe/loader.c -o $@
+
 reent/renamer.o: reent/renamer.c
 	$(CC) $(CFLAGS) $(DEFINES) -D_COMPILING_NEWLIB $(INCLUDES) reent/renamer.c -o $@
 
