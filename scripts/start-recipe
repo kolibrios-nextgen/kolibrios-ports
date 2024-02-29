@@ -1,8 +1,8 @@
 set -e
 
 TARGET=i586-kolibrios
-SDK_INSTALL_DIR=/opt/kolibrios-sdk
-NUM_JOBS=6
+SDK_INSTALL_DIR=/opt/kolibrios-sdk-bin
+NUM_JOBS=8
 
 msg()
 {
