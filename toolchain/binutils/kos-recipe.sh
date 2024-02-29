@@ -1,9 +1,10 @@
 #!/bin/bash
 
-source $SDK_DIR/scripts/start-recipe
+source ../../scripts/start-recipe
 
 BUILD()
 {
+    mkdir -p build
     cd build
     ../configure --target=$TARGET \
                  --prefix="$SDK_INSTALL_DIR/toolchain" \
@@ -34,4 +35,4 @@ CLEAN()
     msg "Binutils build artifacts removed!"
 }
 
-source $SDK_DIR/scripts/end-recipe
+source ../../scripts/end-recipe
