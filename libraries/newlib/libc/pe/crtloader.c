@@ -173,7 +173,7 @@ void* create_image(void *raw)
 //                nt->OptionalHeader.DataDirectory[5].VirtualAddress,
 //                (nt->OptionalHeader.DataDirectory[5].Size+4095)>>12);
 
-        user_unmap(img_base,nt->OptionalHeader.DataDirectory[5].VirtualAddress,
+        _ksys_unmap_pages(img_base,nt->OptionalHeader.DataDirectory[5].VirtualAddress,
                    nt->OptionalHeader.DataDirectory[5].Size);
     };
     return img_base;
@@ -220,4 +220,20 @@ void* load_libc()
 
 }
 
+void  __attribute__((noreturn))
+__crt_startup (void)
+{
+    struct   app_hdr *header;
+    void    *img;
+    void __attribute__((noreturn)) (*entry)(void *img);
 
+    img = load_libc();
+
+    if(img == NULL)
+    {
+        asm ("int $0x40" ::"a"(-1));
+    };
+
+    entry = get_entry_point(img);
+    entry(img);
+}

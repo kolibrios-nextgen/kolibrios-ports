@@ -1,15 +1,12 @@
-CC = kos32-gcc
-AR = kos32-ar
-LD = kos32-ld
+CC = i586-kolibrios-gcc
 
-INSTALLDIR:= /home/autobuild/tools/win32/mingw32
+INSTALLDIR:= /opt/kolibrios-sdk-bin/sysroot
 
 CFLAGS = -c -O2 -fno-builtin -fno-ident -fomit-frame-pointer -DMISSING_SYSCALL_NAMES
-LDFLAGS = -shared -s -T libcdll.lds --out-implib libc.dll.a --image-base 0 
+LDFLAGS = -nostdlib -shared -s -T libcdll.lds -Wl,--image-base=0,--out-implib=libc.dll.a,--version-script=libc.ver
 #LDFLAGS+= --output-def libc.orig.def
-ARFLAGS = crs
 
-SDK_DIR:= $(abspath ../../..)
+ARFLAGS = crs
 
 LIBC_TOPDIR   = .
 LIBC_INCLUDES = $(LIBC_TOPDIR)/include
@@ -23,12 +20,6 @@ DEFINES+= -DPACKAGE_TARNAME=\"newlib\" -DPACKAGE_VERSION=\"2.4.0\"
 SEFINES+= -DPACKAGE_STRING=\"newlib\ 2.4.0\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\"
 
 INCLUDES:=  -I $(LIBC_INCLUDES)
-
-STATIC_SRCS:=					\
-         		crt/start.S		\
-         		crt/crt1.c		\
-			crt/crt2.c		\
-         		crt/exit.S
 
 LIBDLL_SRCS:=					\
 			crt/dllstart.c 		\
@@ -516,8 +507,6 @@ POSIX_SRCS =	opendir.c \
 		telldir.c \
 		rewinddir.c
 
-STATIC_OBJS =  $(patsubst %.S, %.o, $(patsubst %.c, %.o, $(STATIC_SRCS)))
-
 LIBCRT_OBJS =  $(patsubst %.S, %.o, $(patsubst %.c, %.o, $(LIBCRT_SRCS)))
 
 LIBDLL_OBJS =  $(patsubst %.S, %.o, $(patsubst %.c, %.o, $(LIBDLL_SRCS)))
@@ -556,17 +545,9 @@ PRINTF_OBJS= 	stdio/vfprintf.o	\
 		stdio/svfiwscanf.o	\
 		stdio/svfwscanf.o
 
-ifeq ($(findstring static,$(MAKECMDGOALS)),static)
-
-LIB_SRCS:=  	$(STATIC_SRCS)
-LIB_OBJS:=  	$(STATIC_OBJS)
-
-else
 
 LIB_SRCS:=  	$(LIBCDLL_SRCS)
 LIB_OBJS:=  	$(LIBCDLL_OBJS)
-
-endif
 
 LIB_SRCS+=				\
 		$(CORE_SRCS)		\
@@ -586,31 +567,25 @@ LIB_OBJS+=				\
 
 LIB_OBJS+= time/wcsftime.o
 
-shared: $(NAME).dll libdll.a
+all: $(NAME).dll libdll.a pe/crtloader.o
 
 
 $(NAME).dll: $(LIB_OBJS) $(SRC_DEP) Makefile
-	$(LD) $(LDFLAGS) $(LIBPATH) -o $@ $(LIB_OBJS) -lgcc --version-script libc.ver
+	$(CC) $(LDFLAGS) -o $@ $(LIB_OBJS) -lgcc
 #sed -e "s/ @[^ ]*//" libc.orig.def > libc.def
 #sed -f cmd2.sed libc.def > mem
 #sed -f newlib.sed mem > libc.inc
 
-install: libc.dll libc.dll.a libdll.a
-	mv -f libc.dll $(SDK_DIR)/bin
-	mv -f libc.dll.a $(INSTALLDIR)/lib
-	mv -f libdll.a $(INSTALLDIR)/lib
+install: libc.dll libdll.a
+	install -D libc.dll $(INSTALLDIR)/bin/libc.dll
+	install -D libc.dll.a $(INSTALLDIR)/lib/libc.dll.a
+	install -D libdll.a $(INSTALLDIR)/lib/libdll.a
+	install -D pe/crtloader.o $(INSTALLDIR)/lib/crtloader.o
+	install -D ../kos-pedll.lds $(INSTALLDIR)/../toolchain/i586-kolibrios/lib/kos-pedll.lds
+	install -D ../kos-app-dyn.lds $(INSTALLDIR)/../toolchain/i586-kolibrios/lib/kos-app-dyn.lds
 
 libdll.a: $(LIBDLL_OBJS) Makefile
 	$(AR) $(ARFLAGS) libdll.a $(LIBDLL_OBJS)
-
-static: $(NAME).a
-
-$(NAME).a: $(LIB_OBJS) $(SRC_DEP) Makefile
-	$(AR) $(ARFLAGS) $(NAME).a $(LIB_OBJS)
-	mv -f libc.a $(INSTALLDIR)
-
-crt/crt1.o: crt/crt1.c
-	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -fno-delete-null-pointer-checks crt/crt1.c -o $@
 
 crt/crtdll.o: crt/crtdll.c
 	$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -fno-delete-null-pointer-checks crt/crtdll.c -o $@

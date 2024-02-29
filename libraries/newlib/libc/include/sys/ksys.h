@@ -1480,14 +1480,11 @@ KOSAPI void _ksys_shm_close(char* shm_name)
 
 /*====== Function 68, subfunction 26 - release memory pages ============*/
 
-KOSAPI int* _ksys_unmap(void* base, size_t offset, size_t size)
+KOSAPI void _ksys_unmap_pages(void* base, size_t offset, size_t size)
 {
-    int* val;
     asm_inline(
         "int $0x40"
-        : "=a"(val)
-        : "a"(68), "b"(26), "c"(base), "d"(offset), "S"(size));
-    return val;
+        :: "a"(68), "b"(26), "c"(base), "d"(offset), "S"(size));
 }
 
 /*========== Function 68, subfunction 27 - load file ===================*/

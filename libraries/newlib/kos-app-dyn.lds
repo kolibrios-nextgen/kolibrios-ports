@@ -1,6 +1,3 @@
-/*OUTPUT_FORMAT("binary")*/
-/* SEARCH_DIR("=/lib") */
-/* SEARCH_DIR("=/mingw32/lib") */
 ENTRY(__start)
 SECTIONS
 {
@@ -123,7 +120,6 @@ SECTIONS
     *(.drectve)
     *(.note.GNU-stack)
     *(.comment)
-/*    *(.eh_frame) */
     *(.debug_abbrev)
     *(.debug_info)
     *(.debug_line)
