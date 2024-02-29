@@ -4,15 +4,61 @@
  * Distributed under terms of the GNU General Public License
 */
 
-.global ___chkstk
-.global ___chkstk_ms
-.global __alloca
+#tls:0  pid process id
+#tls:4  tid reserved for thread slot
+#tls:8  thread's stack low limit
+#tls:12 thread's stack high limit
+#tls:16 reseved for libc
+ 
+#ifdef L_start
+ 
+          .section .init
+          .global __start
+ 
+.align 4
+__start:
+          movl  $68, %eax
+          movl  $12, %ebx
+          lea  __size_of_stack_reserve__, %ecx
+          addl  $4095, %ecx       #load stack size
+          andl  $-4096, %ecx      #align to page granularity
+          int   $0x40             #and allocate
+          testl %eax, %eax
+          jz    1f
+ 
+          addl %eax, %ecx
+          movl %eax, %fs:8
+          movl %ecx, %fs:12       #save stack base - low limit
+                                  #save stack top  - high limit
+          movl %ecx, %esp         #reload stack
+ 
+          subl $1024, %esp
+ 
+          movl $9, %eax
+          movl %esp, %ebx
+          movl $-1, %ecx
+          int $0x40
+ 
+          movl 30(%ebx), %eax
+          movl %eax, %fs:0        #save pid
+ 
+          addl $1024, %esp
+ 
+          jmp  ___crt_startup
+1:
+          int3                    #trap to debugger
+ 
+          .ascii "No enough memory for stack allocation"
+ 
+#endif
+ 
+ 
+#ifdef L_chkstk
+
+        .global ___chkstk
+        .global __alloca
 
 .section .text
-
-#.def	___chkstk;	.scl	2;	.type	32;	.endef
-#.def ___chkstk_ms;  .scl  2;  .type 32; .endef
-#.def __alloca; .scl  2;  .type 32; .endef
 
 ___chkstk:
 __alloca:
@@ -36,6 +82,11 @@ __alloca:
         int3                    #trap to debugger
         .ascii "Stack overflow"
 
+#endif
+
+#ifdef L_chkstk_ms
+
+       .global ___chkstk_ms
 
 ___chkstk_ms:
        pushl  %ecx            /* save temp */
@@ -64,3 +115,5 @@ ___chkstk_ms:
 3:
        int3                    #trap to debugger
        .ascii "Stack overflow"
+
+#endif
