@@ -41,18 +41,18 @@ Distributed under terms of the GNU General Public License */
 
 /* For KolibriOS applications always link libc.dll.a */
 #undef LIB_SPEC
-#define LIB_SPEC "-lc.dll"
+#define LIB_SPEC "%{shared|mdll: -Tkos-pedll.lds -ldll} %{!shared: %{!mdll: -Tkos-app-dyn.lds}} -lc.dll"
 
 #define LINK_SPEC "%{mwindows:--subsystem windows} \
   %{mconsole:--subsystem console} \
   %{shared: %{mdll: %eshared and mdll are not compatible}} \
   %{shared: --shared} %{mdll: --dll} \
-  %{shared|mdll: -Tkos-pedll.lds -s --entry _DllStartup --image-base=0 -ldll} \
-  %{!shared: %{!mdll: -Bstatic -s -Tkos-app-dyn.lds --image-base=0 --file-alignment=16 --section-alignment=16 }} "
+  %{shared|mdll: --image-base=0} \
+  %{!shared: %{!mdll: -Bstatic --image-base=0}} "
 
-/* Stub! Start file not used. */
+/* Using crtloader (for loading libc.dll). */
 #undef STARTFILE_SPEC
-#define STARTFILE_SPEC ""
+#define STARTFILE_SPEC "crtloader.o"
 
 /* Stub! End file not used. */
 #undef ENDFILE_SPEC
