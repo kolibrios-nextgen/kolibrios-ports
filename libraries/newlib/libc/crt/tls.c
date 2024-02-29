@@ -1,28 +1,28 @@
-#include <libsync.h>
+#include <sys/kos_mutex.h>
 
 static int tls_map[128/4];
 static int *tls_scan_start = tls_map;
-static mutex_t tls_mutex;
+static kos_mutex_t tls_mutex;
 
 void tls_init()
 {
     int i;
 
-    mutex_init(&tls_mutex);
+    kos_mutex_init(&tls_mutex);
 
     tls_map[0] = 0xE0;
 
-    for(i = 1; i < 128/4; i++)
+    for (i = 1; i < 128/4; i++)
         tls_map[i] = -1;
-};
+}
 
 int tls_free(unsigned int key)
 {
     int retval = -1;
 
-    if(key < 4096)
+    if (key < 4096)
     {
-        mutex_lock(&tls_mutex);
+        kos_mutex_lock(&tls_mutex);
 
         __asm__ volatile(
         "shrl $2, %0            \n\t"
@@ -30,18 +30,17 @@ int tls_free(unsigned int key)
         ::"r"(key),"d"(tls_map)
         :"cc","memory");
         tls_scan_start = &tls_map[key>>5];
-        mutex_unlock(&tls_mutex);
+        kos_mutex_unlock(&tls_mutex);
         retval = 0;
     }
     return retval;
-};
-
+}
 
 unsigned int tls_alloc()
 {
     unsigned int key;
 
-    mutex_lock(&tls_mutex);
+    kos_mutex_lock(&tls_mutex);
 
     __asm__ volatile(
     "1:                     \n\t"
@@ -63,7 +62,36 @@ unsigned int tls_alloc()
     :"d"(tls_scan_start)
     :"cc","memory");
 
-    mutex_unlock(&tls_mutex);
+    kos_mutex_unlock(&tls_mutex);
 
     return key;
+}
+
+int tls_set(unsigned int key, void *val)
+{
+    int ret = -1;
+    if (key < 4096)
+    {
+        __asm__ __volatile__(
+        "movl %0, %%fs:(%1)"
+        ::"r"(val),"r"(key));
+        ret = 0;
+    }
+
+    return ret;
+}
+
+void *tls_get(unsigned int key)
+{
+    void *val = (void*)-1;
+
+    if (key < 4096)
+    {
+        __asm__ __volatile__(
+        "movl %%fs:(%1), %0"
+        :"=r"(val)
+        :"r"(key));
+    }
+
+    return val;
 }

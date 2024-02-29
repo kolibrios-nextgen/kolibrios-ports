@@ -48,11 +48,11 @@ CORE_SRCS:=                   			\
 			argz/buf_findstr.c	\
 			argz/envz_get.c		\
 			crt/console.asm		\
-			crt/gthr-kos32.c	\
 			crt/thread.S         	\
 			crt/setjmp.S		\
 			crt/cpu_features.c	\
 			crt/tls.c		\
+			crt/kos_mutex.c	\
 			ctype/ctype_.c 		\
 			ctype/isascii.c		\
 			ctype/isblank.c		\
@@ -101,7 +101,6 @@ CORE_SRCS:=                   			\
 			reent/isattyr.c		\
 			reent/linkr.c		\
 			reent/lseekr.c       	\
-			reent/mutex.c		\
 			reent/openr.c        	\
 			reent/readr.c        	\
 			reent/renamer.c		\
