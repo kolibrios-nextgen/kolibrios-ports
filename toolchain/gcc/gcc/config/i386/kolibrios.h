@@ -48,11 +48,11 @@ Distributed under terms of the GNU General Public License */
   %{shared: %{mdll: %eshared and mdll are not compatible}} \
   %{shared: --shared} %{mdll: --dll} \
   %{shared|mdll: --image-base=0} \
-  %{!shared: %{!mdll: -Bstatic --image-base=0}} "
+  %{!shared: %{!mdll: -Bstatic --image-base=0}} --file-alignment=16 --section-alignment=16"
 
 /* Using crtloader (for loading libc.dll). */
 #undef STARTFILE_SPEC
-#define STARTFILE_SPEC "crtloader.o"
+#define STARTFILE_SPEC "%{!shared: %{!mdll: crtloader.o%s}}"
 
 /* Stub! End file not used. */
 #undef ENDFILE_SPEC
