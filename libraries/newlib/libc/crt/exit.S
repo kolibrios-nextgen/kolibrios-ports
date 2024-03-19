@@ -15,4 +15,4 @@ __Exit:
     int   $0x40             /* destroy stack */
 
     movl  $-1, %eax
-    int   $0x40             /* terminate thread *
+    int   $0x40             /* terminate thread */
