@@ -1,22 +1,17 @@
-/*
- * crtdll.c
- * This file has no copyright assigned and is placed in the Public Domain.
- * This file is a part of the mingw-runtime package.
- * No warranty is given; refer to the file DISCLAIMER within the package.
- *
- * Source code for the shared libc startup proceedures. This code is compiled
- * to make libc.dll, which should be located in the library path.
- *
- */
+/* 
+* Copyright (C) KolibriOS team 2016-2024. All rights reserved.
+* Distributed under terms of the GNU General Public License
+*/
 
 #include <_ansi.h>
+
 #include <reent.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <setjmp.h>
+
+#include <sys/ksys.h>
 
 struct app_hdr
 {
@@ -29,25 +24,20 @@ struct app_hdr
     char  *cmdline;
     char  *path;
     int    __subsystem__;
-    void  *__idata_start;
-    void  *__idata_end;
-    int  (*main)(int argc, char **argv, char **envp);
 };
+
+#define SUBSYSTEM_CUI 3
 
 #define ENV_SIZE 16
 /* TODO: Make it dynamic?* */
 static char* __environ[ENV_SIZE] = {0};
 char **environ = &__environ[0];
 
-extern void _pei386_runtime_relocator (void);
-extern void init_loader(void *libc_image);
 extern void init_global_reent(void);
 extern void init_stdio(void);
 
 extern void __init_conio(void);
 extern void __fini_conio(void);
-extern int link_app(void);
-extern void* get_entry_point(void *raw);
 
 extern void tls_init(void);
 
@@ -81,10 +71,10 @@ static int split_cmdline(char *cmdline, char **argv)
 
     argc = 0;
 
-    for(;;)
+    for (;;)
     {
         /* skip over spaces and tabs */
-        if ( *p )
+        if (*p)
         {
             while (*p == ' ' || *p == '\t')
                 ++p;
@@ -94,7 +84,7 @@ static int split_cmdline(char *cmdline, char **argv)
             break;
 
         state = QUOTE_NONE;
-        if( *p == '\"' )
+        if (*p == '\"' )
         {
             p++;
             state = QUOTE_DELIMITER;
@@ -116,7 +106,7 @@ static int split_cmdline(char *cmdline, char **argv)
                 continue;
             }
 
-            if( *p == ' ' || *p == '\t' )
+            if (*p == ' ' || *p == '\t')
             {
                 if( state == QUOTE_NONE )
                 {
@@ -124,28 +114,28 @@ static int split_cmdline(char *cmdline, char **argv)
                 }
             }
 
-            if( *p == '\0' )
+            if (*p == '\0')
                 break;
 
-            if( *p == '\\' )
+            if (*p == '\\')
             {
-                if( p[1] == '\"' )
+                if (p[1] == '\"')
                 {
                     ++p;
-                    if( p[-2] == '\\' )
+                    if (p[-2] == '\\')
                     {
                         continue;
                     }
                 }
             }
-            if( argv )
+            if (argv)
             {
                 *(new_arg++) = *p;
             }
             ++p;
         };
 
-        if( argv )
+        if (argv)
         {
             argv[ argc ] = start;
             ++argc;
@@ -168,7 +158,7 @@ static int split_cmdline(char *cmdline, char **argv)
         else
         {
             ++argc;
-            if( *p == '\0' )
+            if (*p == '\0')
             {
                 break;
             }
@@ -177,7 +167,7 @@ static int split_cmdline(char *cmdline, char **argv)
     }
 
     return argc;
-};
+}
 
 __attribute__((noreturn))
 void  libc_crt_startup (void *libc_base)
@@ -188,23 +178,14 @@ void  libc_crt_startup (void *libc_base)
     char **argv;
     int    argc;
 
-    _pei386_runtime_relocator();
-
     tls_init();
     init_global_reent();
     init_stdio();
 
-    if(header->__subsystem__ == 3)
+    if (header->__subsystem__ == SUBSYSTEM_CUI)
         __init_conio();
 
- //   __appenv = load_file("/sys/system.env", &__appenv_size);
-
-    init_loader(libc_base);
-
-    if( link_app() == 0)
-        goto done;
-
-    if( header->cmdline[0] != 0)
+    if (header->cmdline[0] != 0)
     {
         argc = split_cmdline(header->cmdline, NULL) + 1;
         argv = alloca((argc+1)*sizeof(char*));
@@ -215,18 +196,16 @@ void  libc_crt_startup (void *libc_base)
     else
     {
         argc = 1;
-        argv = alloca((argc+1)*sizeof(char*));
+        argv = alloca((argc+1) * sizeof(char*));
         argv[0] = header->path;
     }
     argv[argc] = NULL;
 
     init_environ();
 
-    retval = header->main(argc, argv, environ);
 done:
-    if(header->__subsystem__ == 3)
+    if (header->__subsystem__ == SUBSYSTEM_CUI)
         __fini_conio();
 
     exit (retval);
 }
-

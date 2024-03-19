@@ -43,4 +43,3 @@ __crt_start:
            int3                    #trap to debugger
 
            .ascii "No enough memory for stack allocation"
-
