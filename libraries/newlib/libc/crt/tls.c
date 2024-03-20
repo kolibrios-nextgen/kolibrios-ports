@@ -1,3 +1,8 @@
+/* 
+* Copyright (C) KolibriOS team 2016-2024. All rights reserved.
+* Distributed under terms of the GNU General Public License
+*/
+
 #include <sys/kos_mutex.h>
 
 static int tls_map[128/4];
@@ -30,9 +35,11 @@ int tls_free(unsigned int key)
         ::"r"(key),"d"(tls_map)
         :"cc","memory");
         tls_scan_start = &tls_map[key>>5];
+
         kos_mutex_unlock(&tls_mutex);
         retval = 0;
     }
+
     return retval;
 }
 
@@ -49,14 +56,14 @@ unsigned int tls_alloc()
     "add $4, %1             \n\t"
     "cmpl $128+_tls_map, %1 \n\t"
     "jb 1b                  \n\t"
-    "xorl %0, %0      \n\t"
-    "notl %0             \n\t"
+    "xorl %0, %0            \n\t"
+    "notl %0                \n\t"
     "jmp 3f                 \n\t"
     "2:                     \n\t"
-    "btrl %0, (%1)       \n\t"
-    "subl $_tls_map, %1    \n\t"
+    "btrl %0, (%1)          \n\t"
+    "subl $_tls_map, %1     \n\t"
     "leal (%0, %1, 8), %%eax \n\t"
-    "shll $2, %0          \n\t"
+    "shll $2, %0            \n\t"
     "3:"
     :"=r"(key),"=d"(tls_scan_start)
     :"d"(tls_scan_start)
