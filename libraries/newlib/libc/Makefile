@@ -1,5 +1,5 @@
 CC = i586-kolibrios-gcc
-AR = CC = i586-kolibrios-ar
+AR = i586-kolibrios-ar
 
 INSTALLDIR:= /opt/kolibrios-sdk-bin/sysroot
 
