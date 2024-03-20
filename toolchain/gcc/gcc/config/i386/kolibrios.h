@@ -39,9 +39,9 @@ Distributed under terms of the GNU General Public License */
 #undef REAL_LIBGCC_SPEC
 #define REAL_LIBGCC_SPEC LIBGCC_SPEC
 
-/* For KolibriOS applications always link libc.dll.a */
+/* For KolibriOS applications always link libc.a */
 #undef LIB_SPEC
-#define LIB_SPEC "%{shared|mdll: -Tkos-pedll.lds -ldll} %{!shared: %{!mdll: -Tkos-app-dyn.lds}} -lc.dll"
+#define LIB_SPEC "%{!shared: %{!mdll: -Tkos-app.lds}} -lc"
 
 #define LINK_SPEC "%{mwindows:--subsystem windows} \
   %{mconsole:--subsystem console} \
@@ -50,9 +50,9 @@ Distributed under terms of the GNU General Public License */
   %{shared|mdll: --image-base=0} \
   %{!shared: %{!mdll: -Bstatic --image-base=0}} --file-alignment=16 --section-alignment=16"
 
-/* Using crtloader (for loading libc.dll). */
+/* Stub! Start file not used. */
 #undef STARTFILE_SPEC
-#define STARTFILE_SPEC "%{!shared: %{!mdll: crtloader.o%s}}"
+#define STARTFILE_SPEC ""
 
 /* Stub! End file not used. */
 #undef ENDFILE_SPEC
