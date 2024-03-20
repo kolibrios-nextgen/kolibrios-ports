@@ -170,7 +170,7 @@ static int split_cmdline(char *cmdline, char **argv)
 }
 
 __attribute__((noreturn))
-void  libc_crt_startup (void *libc_base)
+void __libc_init (void)
 {
     struct app_hdr *header = NULL;
     int retval = 0;
@@ -207,5 +207,5 @@ done:
     if (header->__subsystem__ == SUBSYSTEM_CUI)
         __fini_conio();
 
-    exit (retval);
+    exit(retval);
 }
