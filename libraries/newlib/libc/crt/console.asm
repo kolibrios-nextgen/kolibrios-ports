@@ -1,6 +1,6 @@
 format MS COFF
 
-include '../proc32.inc'
+include 'proc32.inc'
 
 public _load_libconsole
 
