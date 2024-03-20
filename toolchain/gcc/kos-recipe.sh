@@ -5,6 +5,7 @@ source ../../scripts/start-recipe
 BUILD()
 {
     # FIXME: Perhaps this should be included in the Newlib recipe
+    mkdir -p "$SDK_INSTALL_DIR/sysroot"
     cp -af ../../libraries/newlib/libc/include/. "$SDK_INSTALL_DIR/sysroot/include"
     msg "Newlib headers install successful!"
 
