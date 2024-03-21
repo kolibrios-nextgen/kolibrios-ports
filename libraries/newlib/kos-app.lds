@@ -42,6 +42,7 @@ SECTIONS
         ___RUNTIME_PSEUDO_RELOC_LIST_END__ = .;
         __RUNTIME_PSEUDO_RELOC_LIST_END__ = .;
     }
+
     .CRT ALIGN(16) :
     {
          ___crt_xc_start__ = . ;
@@ -82,7 +83,7 @@ SECTIONS
         ___FRAME_END__ = . ;
         LONG(0);
     }
- 
+
     .bss ALIGN(16):
     {
         *(.bss)
@@ -95,7 +96,7 @@ SECTIONS
         ___stacktop = .;
         ___memsize = . ;
     }
- 
+
     /DISCARD/ :
     {
         *(.debug$S)
@@ -112,5 +113,6 @@ SECTIONS
         *(.debug_pubnames)
         *(.debug_aranges)
         *(.debug_ranges)
+        *(.reloc)
     }
 }
