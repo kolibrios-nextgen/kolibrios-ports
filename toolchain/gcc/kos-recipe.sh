@@ -5,16 +5,16 @@ source ../../scripts/start-recipe
 BUILD()
 {
     # FIXME: Perhaps this should be included in the Newlib recipe
-    mkdir -p "$SDK_INSTALL_DIR/sysroot"
-    cp -af ../../libraries/newlib/libc/include/. "$SDK_INSTALL_DIR/sysroot/include"
+    mkdir -p "$SDK_SYSROOT_DIR"
+    cp -af ../../libraries/newlib/libc/include/. "$SDK_SYSROOT_DIR/include"
     msg "Newlib headers install successful!"
 
     mkdir -p build
     cd build
 
     ../configure --target=$TARGET \
-                 --prefix="$SDK_INSTALL_DIR/toolchain" \
-                 --with-sysroot="$SDK_INSTALL_DIR/sysroot" \
+                 --prefix="$SDK_TOOLCHAIN_DIR" \
+                 --with-sysroot="$SDK_SYSROOT_DIR" \
                  --disable-nls \
                  --enable-shared \
                  --enable-languages=c,c++ \

@@ -13,7 +13,7 @@ BUILD()
 INSTALL()
 {
     cd libc
-    make install INSTALLDIR=$SDK_INSTALL_DIR
+    make install INSTALLDIR=$SDK_SYSROOT_DIR
     msg "Newlib install successful!"
     cd ..
 }

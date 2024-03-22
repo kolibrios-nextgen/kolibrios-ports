@@ -7,8 +7,8 @@ BUILD()
     mkdir -p build
     cd build
     ../configure --target=$TARGET \
-                 --prefix="$SDK_INSTALL_DIR/toolchain" \
-                 --with-sysroot="$SDK_INSTALL_DIR/sysroot" \
+                 --prefix="$SDK_TOOLCHAIN_DIR" \
+                 --with-sysroot="$SDK_SYSROOT_DIR" \
                  --disable-werror \
                  --disable-nls \
                  --disable-intl \
