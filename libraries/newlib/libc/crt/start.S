@@ -12,7 +12,7 @@
 .align 4
 __crt_start:
     movl    $68, %eax
-    movl    12, %ebx
+    movl    $12, %ebx
     lea     __size_of_stack_reserve__, %ecx
     addl    $4095, %ecx                     /* Load stack size */
     andl    $-4096, %ecx                    /* Align to page granularity */
