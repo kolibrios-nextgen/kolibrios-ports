@@ -1,8 +1,3 @@
-CC = i586-kolibrios-gcc
-AR = i586-kolibrios-ar
-
-INSTALLDIR:= /opt/kolibrios-sdk-bin/sysroot
-
 CFLAGS = -c -Os -fno-builtin -fno-ident -fomit-frame-pointer -Iinclude
 CFLAGS+= -D_MB_EXTENDED_CHARSETS_WINDOWS=1
 CFLAGS+= -D_IEEE_LIBM -DHAVE_RENAME -DBUILD_LIBC -DPACKAGE_NAME=\"newlib\"
