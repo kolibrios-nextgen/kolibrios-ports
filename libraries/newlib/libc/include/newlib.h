@@ -187,6 +187,8 @@
 
 #define __DYNAMIC_REENT__
 
+#define STATIC_LIBC 1
+
 #ifdef STATIC_LIBC
   #define BUILD_LIBC
 #endif
