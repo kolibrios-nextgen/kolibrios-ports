@@ -3,7 +3,7 @@
 * Distributed under terms of the GNU General Public License
 */
 
-#include <sys/tls.h>
+#include <sys/kos_tls.h>
 
 .section .init
 
