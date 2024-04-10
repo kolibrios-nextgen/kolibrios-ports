@@ -23,10 +23,13 @@ typedef struct
 } kos_recursive_mutex_t;
 
 void kos_mutex_init(kos_mutex_t *mutex);
+int kos_mutex_trylock(kos_mutex_t *mutex);
 int kos_mutex_lock(kos_mutex_t *mutex);
 int kos_mutex_unlock(kos_mutex_t *mutex);
+int kos_mutex_destroy(kos_mutex_t *mutex);
 
 void kos_recursive_mutex_init(kos_recursive_mutex_t *mutex);
+int kos_recursive_mutex_trylock(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_lock(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_unlock(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_destroy(kos_recursive_mutex_t *mutex);
