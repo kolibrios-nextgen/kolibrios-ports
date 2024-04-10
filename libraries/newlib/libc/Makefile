@@ -41,6 +41,7 @@ libc.a: $(LIBC_OBJS) $(LIBC_SRCS) Makefile
 install: libc.a
 	install -D libc.a $(INSTALLDIR)/lib/libc.a
 	install -D ../kos-app.lds $(INSTALLDIR)/lib/kos-app.lds
+	cp -af include/. $(INSTALLDIR)/include
 
 crt/libc_init.o: crt/libc_init.c
 	$(CC) $(CFLAGS) -fno-delete-null-pointer-checks $< -o $@	
