@@ -14,12 +14,12 @@ void init_reent()
 
     _REENT_INIT_PTR_ZEROED(ent);
 
-    /* Short equivalent tls_set(TLS_KEY_LIBC, ent) */
+    /* Short equivalent kos_tls_set(TLS_KEY_LIBC, ent) */
     __asm__ __volatile__(
         "movl %0, %%fs:16"
         ::"r"(ent)
     );
-    
+
     /* Stdio's internal variables must be set up */
     __sinit(ent);
 }

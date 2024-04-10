@@ -5,8 +5,7 @@
 
 #include <sys/ksys.h>
 #include <sys/kos_mutex.h>
-
-#include "tls.h"
+#include <sys/kos_tls.h>
 
 #define exchange_acquire(ptr, new) \
   __atomic_exchange_4((ptr), (new), __ATOMIC_ACQUIRE)
@@ -60,7 +59,7 @@ void kos_recursive_mutex_init(kos_recursive_mutex_t *mutex)
 
 int kos_recursive_mutex_lock(kos_recursive_mutex_t *mutex)
 {
-    unsigned long me = (unsigned long)tls_get(TLS_KEY_LOW_STACK);
+    unsigned long me = (unsigned long)kos_tls_get(TLS_KEY_LOW_STACK);
 
     if (__sync_fetch_and_add(&mutex->lock, 1) == 0)
     {

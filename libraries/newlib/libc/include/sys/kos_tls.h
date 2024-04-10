@@ -3,8 +3,8 @@
 * Distributed under terms of the GNU General Public License
 */
 
-#ifndef _CRT_TLS_H_
-#define _CRT_TLS_H_
+#ifndef _SYS_KOS_TLS_H_
+#define _SYS_KOS_TLS_H_
 
 /* TLS reserved keys */
 #define TLS_KEY_PID         0
@@ -15,13 +15,13 @@
 
 #ifndef __ASSEMBLER__
 
-void tls_init();
+void kos_tls_init();
 
-unsigned int tls_alloc();
-int tls_free(unsigned int key);
+unsigned int kos_tls_alloc();
+int kos_tls_free(unsigned int key);
 
-int tls_set(unsigned int key, void *val);
-void *tls_get(unsigned int key);
+int kos_tls_set(unsigned int key, void *val);
+void *kos_tls_get(unsigned int key);
 
 #endif /*__ASSEMBLER__ */
 

@@ -12,6 +12,7 @@
 #include <unistd.h>
 
 #include <sys/ksys.h>
+#include <sys/kos_tls.h>
 
 struct app_hdr
 {
@@ -38,8 +39,6 @@ extern void init_stdio(void);
 
 extern void __init_conio(void);
 extern void __fini_conio(void);
-
-extern void tls_init(void);
 
 void init_environ(void)
 {
@@ -178,7 +177,7 @@ void __libc_init (void)
     char **argv;
     int    argc;
 
-    tls_init();
+    kos_tls_init();
     init_global_reent();
     init_stdio();
 

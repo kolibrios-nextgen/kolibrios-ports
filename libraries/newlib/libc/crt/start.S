@@ -3,7 +3,7 @@
 * Distributed under terms of the GNU General Public License
 */
 
-#include "tls.h"
+#include <sys/tls.h>
 
 .section .init
 

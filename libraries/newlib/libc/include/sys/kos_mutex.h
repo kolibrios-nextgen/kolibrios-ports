@@ -28,7 +28,7 @@ int kos_mutex_unlock(kos_mutex_t *mutex);
 
 void kos_recursive_mutex_init(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_lock(kos_recursive_mutex_t *mutex);
-int kos_recursive_mutex_unlock (kos_recursive_mutex_t *mutex);
-int kos_recursive_mutex_destroy (kos_recursive_mutex_t *mutex);
+int kos_recursive_mutex_unlock(kos_recursive_mutex_t *mutex);
+int kos_recursive_mutex_destroy(kos_recursive_mutex_t *mutex);
 
 #endif // _SYS_KOS_MUTEX_H_
