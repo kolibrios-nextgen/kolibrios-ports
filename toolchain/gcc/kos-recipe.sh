@@ -18,7 +18,7 @@ BUILD()
                  --disable-nls \
                  --enable-shared \
                  --enable-languages=c,c++ \
-                 --disable-threads
+                 --enable-threads=kolibrios
 
     make -j$NUM_JOBS all-gcc
     msg "GCC build successful!"

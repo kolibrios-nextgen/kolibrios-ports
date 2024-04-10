@@ -2021,7 +2021,7 @@ case ${enable_threads} in
     target_thread_file='single'
     ;;
   aix | dce | lynx | mipssde | posix | rtems | \
-  single | tpf | vxworks | win32 | mcf)
+  single | tpf | vxworks | win32 | mcf | kolibrios)
     target_thread_file=${enable_threads}
     ;;
   *)
