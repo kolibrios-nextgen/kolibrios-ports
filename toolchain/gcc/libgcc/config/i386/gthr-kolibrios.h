@@ -34,11 +34,16 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #include <sys/kos_tls.h>
 #include <sys/kos_mutex.h>
 
+#define __GTHREADS 1
+
+/* Make sure CONST_CAST2 (origin in system.h) is declared.  */
 #ifndef CONST_CAST2
+#ifdef __cplusplus
+#define CONST_CAST2(TOTYPE,FROMTYPE,X) (const_cast<TOTYPE> (X))
+#else
 #define CONST_CAST2(TOTYPE,FROMTYPE,X) ((__extension__(union {FROMTYPE _q; TOTYPE _nq;})(X))._nq)
 #endif
-
-#define __GTHREADS 1
+#endif
 
 #ifndef __UNUSED_PARAM
 #define __UNUSED_PARAM(x) x
@@ -75,7 +80,7 @@ static inline int __gthread_active_p (void)
     return 1;
 }
 
-static int __gthr_kolibrios_once(__gthread_once_t *once, void (*func) (void))
+static inline int __gthr_kolibrios_once(__gthread_once_t *once, void (*func) (void))
 {
     if (once == NULL || func == NULL)
         return EINVAL;
@@ -97,7 +102,7 @@ static int __gthr_kolibrios_once(__gthread_once_t *once, void (*func) (void))
     return 0;
 }
  
-static int __gthr_kolibrios_key_create(__gthread_key_t *key,
+static inline int __gthr_kolibrios_key_create(__gthread_key_t *key,
                          void (*dtor) (void *) __attribute__((unused)))
 {
     int status = 0;
@@ -134,7 +139,7 @@ static inline void* __gthread_getspecific(__gthread_key_t __key)
 
 static inline int __gthread_setspecific(__gthread_key_t __key, const void *__ptr)
 {
-    return kos_tls_set(__key, __ptr);
+    return kos_tls_set(__key, CONST_CAST2(void *, const void *, __ptr));
 }
 
 static inline void __gthread_mutex_init_function(__gthread_mutex_t *__mutex)
