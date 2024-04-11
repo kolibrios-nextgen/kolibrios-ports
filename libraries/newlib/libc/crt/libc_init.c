@@ -42,7 +42,7 @@ extern void init_stdio(void);
 extern void __init_conio(void);
 extern void __fini_conio(void);
 
-extern int main (int, char **, char **);
+extern int main(int argc, char **argv, char **envp);
 
 void init_environ(void)
 {
@@ -206,7 +206,7 @@ void __libc_init (void)
 
     init_environ();
 
-    main(argc, argv, environ);
+    retval = main(argc, argv, environ);
 
 done:
     if (header->__subsystem__ == SUBSYSTEM_CUI)
