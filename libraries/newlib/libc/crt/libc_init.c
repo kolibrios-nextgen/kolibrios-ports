@@ -14,6 +14,8 @@
 #include <sys/ksys.h>
 #include <sys/kos_tls.h>
 
+void* __dso_handle = NULL;
+
 struct app_hdr
 {
     char  banner[8];
@@ -39,6 +41,8 @@ extern void init_stdio(void);
 
 extern void __init_conio(void);
 extern void __fini_conio(void);
+
+extern int main (int, char **, char **);
 
 void init_environ(void)
 {
@@ -201,6 +205,8 @@ void __libc_init (void)
     argv[argc] = NULL;
 
     init_environ();
+
+    main(argc, argv, environ);
 
 done:
     if (header->__subsystem__ == SUBSYSTEM_CUI)
