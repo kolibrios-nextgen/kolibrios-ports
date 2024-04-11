@@ -52,7 +52,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
    * @{
    */
 
-#ifdef _GLIBCXX_HAS_GTHREADS
+#ifdef __GTHREADS
   /// @cond undocumented
 
   // Common base class for std::mutex and std::timed_mutex
@@ -138,7 +138,7 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
   };
 
   /// @cond undocumented
-
+#ifdef __GTHREAD_HAS_COND
   // Implementation details for std::condition_variable
   class __condvar
   {
@@ -209,8 +209,8 @@ _GLIBCXX_BEGIN_NAMESPACE_VERSION
 #endif
   };
   /// @endcond
-
-#endif // _GLIBCXX_HAS_GTHREADS
+#endif /*__GTHREAD_HAS_COND */
+#endif /* __GTHREADS */
 
   /// Do not acquire ownership of the mutex.
   struct defer_lock_t { explicit defer_lock_t() = default; };
