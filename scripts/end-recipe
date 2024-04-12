@@ -1,10 +1,11 @@
-case $1 in
-    "--build" ) BUILD ;;
-    "--install" ) INSTALL ;;
-    "--clean" ) CLEAN ;;
-    "" )
-        BUILD
-        INSTALL
-        ;;
-    *) fatal "Unknown argument!"
-esac
+if [[ $# -eq 0 ]]; then
+    BUILD
+    INSTALL
+else
+    case $1 in
+        "--build" ) BUILD ;;
+        "--install" ) INSTALL ;;
+        "--clean" ) CLEAN ;;
+        *) fatal "Unknown argument!"
+    esac
+fi
