@@ -1740,6 +1740,11 @@ else
     lt_cv_dlopen_libs=
     ;;
 
+  kolibrios*)
+    lt_cv_dlopen=no
+    lt_cv_dlopen_libs=
+    ;;
+
   darwin*)
   # if libdl is installed we need to link against it
     AC_CHECK_LIB([dl], [dlopen],

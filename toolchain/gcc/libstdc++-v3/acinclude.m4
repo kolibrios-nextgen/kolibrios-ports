@@ -284,6 +284,8 @@ AC_DEFUN([GLIBCXX_CHECK_LINKER_FEATURES], [
      ;;
     *-*-mingw*)
      ;;
+    *-*-kolibrios*)
+     ;;
     *)
       AC_MSG_CHECKING([for ld that supports -Wl,-z,relro])
       cxx_z_relo=`$LD -v --help 2>/dev/null | grep "z relro"`
@@ -2123,7 +2125,7 @@ AC_DEFUN([GLIBCXX_CHECK_DEV_RANDOM], [
   ## For MSys environment the test above is detected as false-positive
   ## on mingw-targets.  So disable it explicitly for them.
       case ${target_os} in
-	*mingw*) glibcxx_cv_dev_random=no ;;
+	*mingw* | *kolibrios*) glibcxx_cv_dev_random=no ;;
 	*) glibcxx_cv_dev_random=yes ;;
       esac
     else

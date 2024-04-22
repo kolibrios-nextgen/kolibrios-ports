@@ -11910,6 +11910,11 @@ else
     lt_cv_dlopen_libs=
     ;;
 
+  kolibrios*)
+    lt_cv_dlopen=no
+    lt_cv_dlopen_libs=
+    ;;
+
   darwin*)
   # if libdl is installed we need to link against it
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking for dlopen in -ldl" >&5
@@ -12187,7 +12192,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12190 "configure"
+#line 12195 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12293,7 +12298,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<_LT_EOF
-#line 12296 "configure"
+#line 12301 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15810,6 +15815,7 @@ case $target_thread_file in
     vxworks)	thread_header=config/gthr-vxworks.h ;;
     win32)	thread_header=config/i386/gthr-win32.h ;;
     mcf)	thread_header=config/i386/gthr-mcf.h ;;
+    kolibrios)	thread_header=config/i386/gthr-kolibrios.h ;;
 esac
 
 
@@ -16017,7 +16023,7 @@ $as_echo "$glibcxx_cv_atomic_long_long" >&6; }
   # Fake what AC_TRY_COMPILE does.
 
     cat > conftest.$ac_ext << EOF
-#line 16020 "configure"
+#line 16026 "configure"
 int main()
 {
   typedef bool atomic_type;
@@ -16052,7 +16058,7 @@ $as_echo "$glibcxx_cv_atomic_bool" >&6; }
     rm -f conftest*
 
     cat > conftest.$ac_ext << EOF
-#line 16055 "configure"
+#line 16061 "configure"
 int main()
 {
   typedef short atomic_type;
@@ -16087,7 +16093,7 @@ $as_echo "$glibcxx_cv_atomic_short" >&6; }
     rm -f conftest*
 
     cat > conftest.$ac_ext << EOF
-#line 16090 "configure"
+#line 16096 "configure"
 int main()
 {
   // NB: _Atomic_word not necessarily int.
@@ -16123,7 +16129,7 @@ $as_echo "$glibcxx_cv_atomic_int" >&6; }
     rm -f conftest*
 
     cat > conftest.$ac_ext << EOF
-#line 16126 "configure"
+#line 16132 "configure"
 int main()
 {
   typedef long long atomic_type;
@@ -16279,7 +16285,7 @@ $as_echo "mutex" >&6; }
   # unnecessary for this test.
 
     cat > conftest.$ac_ext << EOF
-#line 16282 "configure"
+#line 16288 "configure"
 int main()
 {
   _Decimal32 d1;
@@ -16321,7 +16327,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   # unnecessary for this test.
 
   cat > conftest.$ac_ext << EOF
-#line 16324 "configure"
+#line 16330 "configure"
 template<typename T1, typename T2>
   struct same
   { typedef T2 type; };
@@ -22345,6 +22351,8 @@ $as_echo "$ac_gcsections" >&6; }
      ;;
     *-*-mingw*)
      ;;
+    *-*-kolibrios*)
+     ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
 $as_echo_n "checking for ld that supports -Wl,-z,relro... " >&6; }
@@ -28145,7 +28153,7 @@ else
   ## For MSys environment the test above is detected as false-positive
   ## on mingw-targets.  So disable it explicitly for them.
       case ${target_os} in
-	*mingw*) glibcxx_cv_dev_random=no ;;
+	*mingw* | *kolibrios*) glibcxx_cv_dev_random=no ;;
 	*) glibcxx_cv_dev_random=yes ;;
       esac
     else
@@ -29598,6 +29606,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
@@ -35533,6 +35543,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
@@ -47468,6 +47480,8 @@ $as_echo "$ac_gcsections" >&6; }
      ;;
     *-*-mingw*)
      ;;
+    *-*-kolibrios*)
+     ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
 $as_echo_n "checking for ld that supports -Wl,-z,relro... " >&6; }
@@ -47755,6 +47769,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
@@ -48220,6 +48236,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
@@ -54492,7 +54510,7 @@ _ACEOF
   fi
 
     ;;
-  *-mingw32*)
+  *-mingw32* | *-kolibrios*)
 
   # If we're not using GNU ld, then there's no point in even trying these
   # tests.  Check for that first.  We should have already tested for gld
@@ -54622,6 +54640,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
@@ -60774,6 +60794,8 @@ $as_echo "$ac_gcsections" >&6; }
      ;;
     *-*-mingw*)
      ;;
+    *-*-kolibrios*)
+     ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5
 $as_echo_n "checking for ld that supports -Wl,-z,relro... " >&6; }
@@ -60986,6 +61008,8 @@ $as_echo "$ac_gcsections" >&6; }
     *-*-cygwin*)
      ;;
     *-*-mingw*)
+     ;;
+    *-*-kolibrios*)
      ;;
     *)
       { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ld that supports -Wl,-z,relro" >&5

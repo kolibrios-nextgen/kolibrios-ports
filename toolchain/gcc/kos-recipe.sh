@@ -26,9 +26,6 @@ BUILD()
     make -j$NUM_JOBS all-target-libgcc
     msg "Libgcc build successful!"
 
-    make -j$NUM_JOBS all-target-libstdc++-v3
-    msg "Libstdc++v3 build successful!"
-
     cd ..
 }
 
@@ -40,9 +37,6 @@ INSTALL()
 
     make install-target-libgcc
     msg "Libgcc install successful!"
-
-    make install-target-libstdc++-v3
-    msg "Libstdc++ install successful!"
 
     cd ..
 }

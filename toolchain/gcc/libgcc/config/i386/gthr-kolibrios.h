@@ -34,8 +34,6 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #include <sys/kos_tls.h>
 #include <sys/kos_mutex.h>
 
-#define __GTHREADS 1
-
 /* Make sure CONST_CAST2 (origin in system.h) is declared.  */
 #ifndef CONST_CAST2
 #ifdef __cplusplus
@@ -45,13 +43,15 @@ see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
 #endif
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef __UNUSED_PARAM
 #define __UNUSED_PARAM(x) x
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define __GTHREADS 1
 
 #define exchange_acquire(ptr, new) \
   __atomic_exchange_4((ptr), (new), __ATOMIC_ACQUIRE)

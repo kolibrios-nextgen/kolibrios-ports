@@ -23,6 +23,7 @@ case $1 in
     vxworks)	thread_header=config/gthr-vxworks.h ;;
     win32)	thread_header=config/i386/gthr-win32.h ;;
     mcf)	thread_header=config/i386/gthr-mcf.h ;;
+    kolibrios)	thread_header=config/i386/gthr-kolibrios.h ;;
 esac
 AC_SUBST(thread_header)
 ])
