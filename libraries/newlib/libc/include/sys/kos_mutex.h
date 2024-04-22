@@ -6,6 +6,10 @@
 #ifndef _SYS_KOS_MUTEX_H_
 #define _SYS_KOS_MUTEX_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <sys/ksys.h>
 
 typedef struct
@@ -34,4 +38,7 @@ int kos_recursive_mutex_lock(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_unlock(kos_recursive_mutex_t *mutex);
 int kos_recursive_mutex_destroy(kos_recursive_mutex_t *mutex);
 
+#ifdef __cplusplus
+}
+#endif
 #endif // _SYS_KOS_MUTEX_H_

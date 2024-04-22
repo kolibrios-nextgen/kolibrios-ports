@@ -15,6 +15,10 @@
 
 #ifndef __ASSEMBLER__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void kos_tls_init();
 
 unsigned int kos_tls_alloc();
@@ -23,6 +27,10 @@ int kos_tls_free(unsigned int key);
 int kos_tls_set(unsigned int key, void *val);
 void *kos_tls_get(unsigned int key);
 
-#endif /*__ASSEMBLER__ */
+#ifdef __cplusplus
+}
+#endif
 
-#endif /* _CRT_TLS_H */
+#endif /*!__ASSEMBLER__ */
+
+#endif /* _SYS_KOS_TLS_H_ */
