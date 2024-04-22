@@ -6,11 +6,13 @@
 source scripts/start-recipe
 
 ROOT_DIR="$PWD"
+PATH=$PATH:"$SDK_TOOLCHAIN_DIR/bin"
 
 declare -a DIRS=(
     "toolchain/binutils"
     "toolchain/gcc"
     "libraries/newlib"
+    "toolchain/gcc/libstdc++-v3"
 )
 
 BUILD()
