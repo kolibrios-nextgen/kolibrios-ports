@@ -21,9 +21,10 @@ BUILD()
     done
 }
 
-INSTALL() 
+INSTALL()
 {
-    msg "For root recipes, installation is performed in BUILD"
+    :;
+    # "For root recipes, installation is performed in BUILD"
 }
 
 CLEAN()
