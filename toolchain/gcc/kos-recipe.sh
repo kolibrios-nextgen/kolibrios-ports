@@ -1,10 +1,12 @@
 #!/bin/bash
 
+# Copyright (C) KolibriOS-NG team 2024. All rights reserved
+# Distributed under terms of the GNU General Public License
+
 source ../../scripts/start-recipe
 
 BUILD()
 {
-    # FIXME: Perhaps this should be included in the Newlib recipe
     mkdir -p "$SDK_SYSROOT_DIR"
     cp -af ../../libraries/newlib/libc/include/. "$SDK_SYSROOT_DIR/include"
     msg "Newlib headers install successful!"
